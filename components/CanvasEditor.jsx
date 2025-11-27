@@ -55,7 +55,7 @@ export default function CanvasEditor() {
 
       if (image) {
         ctx.save();
-        const borderRadius = 20;
+        const borderRadius = 100;
         const w = imageWidth * scale;
         const h = imageHeight * scale;
         drawRoundedRect(ctx, position.x, position.y, w, h, borderRadius);
@@ -124,7 +124,7 @@ export default function CanvasEditor() {
     <>
       {/* Top bar */}
       <div className="topBarWrapper">
-        <h2 className="title">📲🗳️ Packy Media Poster Editor Software 👥📸✨</h2>
+        <h2 className="title">📲🗳️ LokNetaa Poster Editor Software 👥📸✨</h2>
         <div className="topBar">
           <button className="button" onClick={() => fileRef.current?.click()}>
             📤 Import Photo
