@@ -10,12 +10,12 @@ export default function CanvasEditor() {
 
   const canvasSize = 600;
   // ✅ Equal width & height for perfect circle
-  const [imageSize, setImageSize] = useState(220);
+  const [imageSize, setImageSize] = useState(216);
   const [scale, setScale] = useState(1);
 
   const [position, setPosition] = useState({
-    x: 54,
-    y: canvasSize / 2 - imageSize / 2 + 14,
+    x: 40,
+    y: canvasSize / 2 - imageSize / 2 + 20,
   });
 
   const handleUpload = (e) => {
@@ -115,7 +115,7 @@ export default function CanvasEditor() {
     <>
       {/* Top bar */}
       <div className="topBarWrapper">
-        <h2 className="title">📲🗳️ LokNetaa Poster Editor Software 👥📸✨</h2>
+        <h2 className="title">📲🗳️ LokNetaa Poster Editor Softwaree 👥📸✨</h2>
         <div className="topBar">
           <button className="button" onClick={() => fileRef.current?.click()}>
             📤 Import Photo
