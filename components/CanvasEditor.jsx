@@ -9,13 +9,13 @@ export default function CanvasEditor() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const canvasSize = 600;
-  const [imageWidth, setImageWidth] = useState(220);
-  const [imageHeight, setImageHeight] = useState(220);
+  // ✅ Equal width & height for perfect circle
+  const [imageSize, setImageSize] = useState(220);
   const [scale, setScale] = useState(1);
 
   const [position, setPosition] = useState({
     x: 54,
-    y: canvasSize / 2 - imageHeight / 2 + 14,
+    y: canvasSize / 2 - imageSize / 2 + 14,
   });
 
   const handleUpload = (e) => {
@@ -24,20 +24,6 @@ export default function CanvasEditor() {
     const img = new Image();
     img.onload = () => setImage(img);
     img.src = URL.createObjectURL(file);
-  };
-
-  const drawRoundedRect = (ctx, x, y, width, height, radius) => {
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + width - radius, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    ctx.lineTo(x + width, y + height - radius);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    ctx.lineTo(x + radius, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
   };
 
   const drawCanvas = () => {
@@ -55,12 +41,17 @@ export default function CanvasEditor() {
 
       if (image) {
         ctx.save();
-        const borderRadius = 100;
-        const w = imageWidth * scale;
-        const h = imageHeight * scale;
-        drawRoundedRect(ctx, position.x, position.y, w, h, borderRadius);
+        const size = imageSize * scale;
+        const centerX = position.x + size / 2;
+        const centerY = position.y + size / 2;
+
+        // ✅ Circle clip
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, size / 2, 0, Math.PI * 2);
+        ctx.closePath();
         ctx.clip();
-        ctx.drawImage(image, position.x, position.y, w, h);
+
+        ctx.drawImage(image, position.x, position.y, size, size);
         ctx.restore();
       }
     };
@@ -68,7 +59,7 @@ export default function CanvasEditor() {
 
   useEffect(() => {
     drawCanvas();
-  }, [image, position, scale, imageWidth, imageHeight]);
+  }, [image, position, scale, imageSize]);
 
   const handlePointerDown = (e) => {
     if (!image) return;
@@ -77,9 +68,9 @@ export default function CanvasEditor() {
     const y = e.clientY - rect.top;
     if (
       x > position.x &&
-      x < position.x + imageWidth * scale &&
+      x < position.x + imageSize * scale &&
       y > position.y &&
-      y < position.y + imageHeight * scale
+      y < position.y + imageSize * scale
     ) {
       setDragging(true);
       setOffset({ x: x - position.x, y: y - position.y });
@@ -124,7 +115,7 @@ export default function CanvasEditor() {
     <>
       {/* Top bar */}
       <div className="topBarWrapper">
-        <h2 className="title">📲🗳️ LokNetaa Poster Editor Softwareee 👥📸✨</h2>
+        <h2 className="title">📲🗳️ LokNetaa Poster Editor Software 👥📸✨</h2>
         <div className="topBar">
           <button className="button" onClick={() => fileRef.current?.click()}>
             📤 Import Photo
