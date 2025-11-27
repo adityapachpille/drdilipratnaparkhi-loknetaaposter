@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "LokNetaa Poster Editor Software",
-  description: "Develop By ARP Digital Solutions.",
+  description: "Develop By ARP Digital Solution.",
 };
 
 export default function RootLayout({
